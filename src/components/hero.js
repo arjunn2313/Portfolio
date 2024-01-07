@@ -6,7 +6,7 @@ export default function Hero() {
       style={{ height: "92%" }}
       className="text-white flex flex-col justify-between items-center md:flex-row md:justify-around "
     >
-      <div className="flex flex-col gap-4 pt-3 md:w-1/2 md:gap-6 lg:p-0 lg:g-5" >
+      <div className="flex flex-col justify-around gap-4 pt-3 md:w-1/2 md:gap-6 lg:p-0 lg:g-5" >
         <div className="flex flex-col px-3 gap-1 md:gap-7 ">
           <span style={{ fontFamily: "Popins" }} className="text-2xl text-center md:text-5xl lg:text-6xl lg:text-start">
             Hi, I'm ARJUN,
