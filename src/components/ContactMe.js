@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaFacebook, FaGithub } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
+import axios from "axios";
 
 export default function ContactMe() {
   const [contact, setContact] = useState({
@@ -10,6 +11,7 @@ export default function ContactMe() {
     message: "",
   });
   const [errors, setErrors] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,7 +29,28 @@ export default function ContactMe() {
     if (Object.keys(error).length > 0) {
       setErrors(error);
     } else {
-      alert("ok");
+      try {
+        axios.post("https://porfolio-server-djqe.onrender.com/contact",contact).then((res)=>{
+          console.log(res.data)
+          error.message = 'Thanks for the response'
+          setMessage(error)
+          setContact({
+            email : "",
+            message : "",
+            subject : ""
+          })
+        })
+         
+      } catch (error) {
+        console.log(error)
+        error.ermessage = 'Something went wrong please try again after sometime'
+        setMessage(error)
+        setContact({
+          email : "",
+          message : "",
+          subject : ""
+        })
+      }
     }
   };
 
@@ -41,8 +64,10 @@ export default function ContactMe() {
       </p>
       <h3 className="text-center text-4xl font-thin mt-3">OR</h3>
       <div className="w-4/5 mx-auto my-auto md:w-4/6 lg:w-1/2">
+       {message.message && <p className="text-center text-green-800 font-bold">{message.message}</p>}
+       {message.ermessage && <p className="text-center text-red-800 font-bold">{message.ermessage}</p>}
         <form onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
             <label>Email</label>
             <input
               type="email"
@@ -57,7 +82,7 @@ export default function ContactMe() {
               <span className="text-red-600">{errors.email}</span>
             )}
           </div>
-          <div className="flex flex-col gap-2 pt-2">
+          <div className="flex flex-col gap-1 pt-2">
             <label>Subject</label>
             <input
               type="text"
@@ -72,7 +97,7 @@ export default function ContactMe() {
               <span className="text-red-600">{errors.subject}</span>
             )}
           </div>
-          <div className="flex flex-col gap-2  pt-2">
+          <div className="flex flex-col gap-1  pt-2">
             <label>Message</label>
             <textarea
               className="border-2 h-20 md:h-40 lg:h-32 outline-none p-2"
@@ -97,7 +122,7 @@ export default function ContactMe() {
         </form>
       </div>
 
-      <div className="bg-black absolute bottom-0 w-full p-2 text-white flex justify-around items-center">
+      <div className="bg-black absolute bottom-0 w-full p-1 text-white flex justify-around items-center">
         <h6>Ⓒ Copyright</h6>
         <div className="flex gap-5">
           <a href="https://github.com/arjunn2313">
